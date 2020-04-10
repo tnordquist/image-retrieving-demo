@@ -16,14 +16,22 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField "String", "BASE_URL",
-                getProperty("../../services/animals.properties", "base_url")
+//        buildConfigField "String", "BASE_URL",
+//                getProperty("../../services/animals.properties", "base_url")
+        buildConfigField "String", "BASE_URL",'"https://us-central1-apis-4674e.cloudfunctions.net/"'
+
+        buildConfigField "String", "CLIENT_KEY",
+                getProperty("../../services/animals.properties", "client_key")
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
 }
 dependencies {
@@ -72,5 +80,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'androidx.navigation:navigation-fragment:2.2.1'
+    implementation 'androidx.navigation:navigation-ui:2.2.1'
 
 }

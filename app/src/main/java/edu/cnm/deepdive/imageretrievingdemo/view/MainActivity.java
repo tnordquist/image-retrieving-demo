@@ -1,7 +1,8 @@
-package edu.cnm.deepdive.imageretrievingdemo;
+package edu.cnm.deepdive.imageretrievingdemo.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import edu.cnm.deepdive.imageretrievingdemo.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -10,4 +11,6 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
   }
+
+
 }
