@@ -1,20 +1,25 @@
-package edu.cnm.deepdive.imageretrievingdemo;
+package edu.cnm.deepdive.imageretrievingdemo.view;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import edu.cnm.deepdive.imageretrievingdemo.service.ApodService;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import edu.cnm.deepdive.imageretrievingdemo.BuildConfig;
+import edu.cnm.deepdive.imageretrievingdemo.R;
+import edu.cnm.deepdive.imageretrievingdemo.model.Animal;
+import edu.cnm.deepdive.imageretrievingdemo.model.service.AnimalService;
 import java.io.IOException;
+import java.util.List;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -57,7 +62,6 @@ public class ImageFragment extends Fragment {
     public void run() {
       Gson gson = new GsonBuilder()
           .excludeFieldsWithoutExposeAnnotation()
-          .setDateFormat("yyyy-MM-dd")
           .create();
       Retrofit retrofit = new Retrofit.Builder()
           .baseUrl(BuildConfig.BASE_URL)
@@ -65,16 +69,16 @@ public class ImageFragment extends Fragment {
           .build();
       AnimalService service = retrofit.create(AnimalService.class);
       try {
-        Response<Animal> response = service.get(BuildConfig.API_KEY, "2019-01-27").execute();
+        Response<List<Animal>> response = service.getAnimals(BuildConfig.CLIENT_KEY).execute();
         if (response.isSuccessful()) {
-          Animal animal = response.body();
-          String url = animal.getUrl();
+          List<Animal> animals = response.body();
+          String url = animals.get(48).getUrl();
           getActivity().runOnUiThread(() -> contentView.loadUrl(url));
         } else {
-          Log.e("ApodService", response.message());
+          Log.e("AnimalService", response.message());
         }
       } catch (IOException e) {
-        Log.e("ApodService", e.getMessage(), e);
+        Log.e("AnimalService", e.getMessage(), e);
       }
     }
 
