@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.imageretrievingdemo.view;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.webkit.WebResourceRequest;
@@ -18,6 +19,7 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -54,20 +56,22 @@ public class ImageFragment extends Fragment {
     settings.setDisplayZoomControls(false);
     settings.setUseWideViewPort(true);
     settings.setLoadWithOverviewMode(true);
-    new Retriever().start();
+    new RetrieveImageTask().execute();
   }
 
   /**
-   * The java Thread class will be replaced by AsyncTask because AsyncTask enables proper and easy
-   * use of the UI thread. This class allows performing background operations and publishing results
-   * on the UI thread without having to manipulate threads and/or handlers. An asynchronous task is
-   * defined by a computation that runs on a background thread and whose result is published on the
-   * UI thread.
+   * AsyncTask enables proper and easy * use of the UI thread. This class allows performing
+   * background operations and publishing results * on the UI thread without having to manipulate
+   * threads and/or handlers. An asynchronous task is * defined by a computation that runs on a
+   * background thread and whose result is published on the * UI thread.
    */
-  private class Retriever extends Thread {
+  private class RetrieveImageTask extends AsyncTask<List<Animal>, Void, List<Animal>> {
+
+    AnimalService service;
 
     @Override
-    public void run() {
+    protected void onPreExecute() {
+      super.onPreExecute();
       Gson gson = new GsonBuilder()
           .excludeFieldsWithoutExposeAnnotation()
           .create();
@@ -75,22 +79,31 @@ public class ImageFragment extends Fragment {
           .baseUrl(BuildConfig.BASE_URL)
           .addConverterFactory(GsonConverterFactory.create(gson))
           .build();
-      AnimalService service = retrofit.create(AnimalService.class);
+      service = retrofit.create(AnimalService.class);
+    }
+
+    @Override
+    protected List<Animal> doInBackground(List<Animal>... lists) {
+
+      List<Animal> animals = null;
       try {
         Response<List<Animal>> response = service.getAnimals(BuildConfig.CLIENT_KEY).execute();
         if (response.isSuccessful()) {
-          List<Animal> animals = response.body();
-          String url = animals.get(48).getUrl();
-          getActivity().runOnUiThread(() -> contentView.loadUrl(url));
-        } else {
-          Log.e("AnimalService", response.message());
+          animals = response.body();
         }
       } catch (IOException e) {
         Log.e("AnimalService", e.getMessage(), e);
       }
+      return animals;
+
     }
 
+    @Override
+    protected void onPostExecute(List<Animal> animals) {
+      super.onPostExecute(animals);
+      String url = animals.get(7).getUrl();
+      getActivity().runOnUiThread(() -> contentView.loadUrl(url));
+    }
   }
-
-
 }
+
