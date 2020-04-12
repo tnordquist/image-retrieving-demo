@@ -1,30 +1,24 @@
-package edu.cnm.deepdive.imageretrievingdemo.view;
+package edu.cnm.deepdive.imageretrievingdemo;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import edu.cnm.deepdive.imageretrievingdemo.service.ApodService;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import edu.cnm.deepdive.imageretrievingdemo.BuildConfig;
-import edu.cnm.deepdive.imageretrievingdemo.R;
-import edu.cnm.deepdive.imageretrievingdemo.model.Animal;
-import edu.cnm.deepdive.imageretrievingdemo.model.service.AnimalService;
 import java.io.IOException;
-import java.util.List;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ImageFragment extends Fragment {
-
   private WebView contentView;
 
   public View onCreateView(@NonNull LayoutInflater inflater,
@@ -77,6 +71,8 @@ public class ImageFragment extends Fragment {
       try {
         Response<List<Animal>> response = service.getAnimals(BuildConfig.CLIENT_KEY).execute();
         if (response.isSuccessful()) {
+          List<Animal> animals = response.body();
+          String url = animals.get(48).getUrl();
           List<Animal> animals = response.body();
           String url = animals.get(32).getUrl();
           getActivity().runOnUiThread(() -> contentView.loadUrl(url));
