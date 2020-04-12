@@ -1,8 +1,7 @@
 package edu.cnm.deepdive.imageretrievingdemo.model.service;
 
+import com.google.android.gms.common.api.internal.ApiKey;
 import edu.cnm.deepdive.imageretrievingdemo.model.Animal;
-import edu.cnm.deepdive.imageretrievingdemo.model.ApiKey;
-import io.reactivex.Single;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Field;
