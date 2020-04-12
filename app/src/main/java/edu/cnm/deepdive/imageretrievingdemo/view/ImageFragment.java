@@ -2,21 +2,21 @@ package edu.cnm.deepdive.imageretrievingdemo.view;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import edu.cnm.deepdive.imageretrievingdemo.BuildConfig;
 import edu.cnm.deepdive.imageretrievingdemo.R;
 import edu.cnm.deepdive.imageretrievingdemo.model.Animal;
 import edu.cnm.deepdive.imageretrievingdemo.model.service.AnimalService;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.util.List;
 import retrofit2.Response;
@@ -58,9 +58,11 @@ public class ImageFragment extends Fragment {
   }
 
   /**
-   * This Thread is code that violates a rule of Android development: the code within a separate
-   * thread must never, under any circumstances,directly update any aspect of the user interface.
-   * The first stage solution is to incorporate asynctask.
+   * The java Thread class will be replaced by AsyncTask because AsyncTask enables proper and easy
+   * use of the UI thread. This class allows performing background operations and publishing results
+   * on the UI thread without having to manipulate threads and/or handlers. An asynchronous task is
+   * defined by a computation that runs on a background thread and whose result is published on the
+   * UI thread.
    */
   private class Retriever extends Thread {
 
@@ -78,7 +80,7 @@ public class ImageFragment extends Fragment {
         Response<List<Animal>> response = service.getAnimals(BuildConfig.CLIENT_KEY).execute();
         if (response.isSuccessful()) {
           List<Animal> animals = response.body();
-          String url = animals.get(32).getUrl();
+          String url = animals.get(48).getUrl();
           getActivity().runOnUiThread(() -> contentView.loadUrl(url));
         } else {
           Log.e("AnimalService", response.message());
