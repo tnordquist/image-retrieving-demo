@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.imageretrievingdemo.view;
+package edu.cnm.deepdive.imageretrievingdemo.controller;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -102,7 +101,7 @@ public class ImageFragment extends Fragment {
     protected void onPostExecute(List<Animal> animals) {
       super.onPostExecute(animals);
       String url = animals.get(7).getUrl();
-      getActivity().runOnUiThread(() -> contentView.loadUrl(url));
+      contentView.loadUrl(url);
     }
   }
 }

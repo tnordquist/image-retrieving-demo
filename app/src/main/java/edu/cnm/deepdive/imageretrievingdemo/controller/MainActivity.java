@@ -1,4 +1,4 @@
-package edu.cnm.deepdive.imageretrievingdemo.view;
+package edu.cnm.deepdive.imageretrievingdemo.controller;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;

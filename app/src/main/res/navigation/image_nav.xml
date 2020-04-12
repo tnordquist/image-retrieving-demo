@@ -7,7 +7,7 @@
 
   <fragment
     android:id="@+id/image_fragment"
-    android:name="edu.cnm.deepdive.imageretrievingdemo.view.ImageFragment"
+    android:name="edu.cnm.deepdive.imageretrievingdemo.controller.ImageFragment"
     android:label="fragment_image"
     tools:layout="@layout/fragment_image"/>
 </navigation>
