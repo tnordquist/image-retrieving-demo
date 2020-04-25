@@ -1,38 +1,57 @@
 package edu.cnm.deepdive.imageretrievingdemo.controller;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import edu.cnm.deepdive.imageretrievingdemo.BuildConfig;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import edu.cnm.deepdive.imageretrievingdemo.R;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import edu.cnm.deepdive.imageretrievingdemo.model.Animal;
-import edu.cnm.deepdive.imageretrievingdemo.model.service.AnimalService;
-import java.io.IOException;
+import edu.cnm.deepdive.imageretrievingdemo.viewmodel.MainViewModel;
+import java.util.ArrayList;
 import java.util.List;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import java.util.Objects;
 
 public class ImageFragment extends Fragment {
 
   private WebView contentView;
+  private ViewModel viewModel;
+  String url;
 
   public View onCreateView(@NonNull LayoutInflater inflater,
       ViewGroup container, Bundle savedInstanceState) {
     View root = inflater.inflate(R.layout.fragment_image, container, false);
     setupWebView(root);
     return root;
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    assert getParentFragment() != null;
+    viewModel = new ViewModelProvider(Objects.requireNonNull(getActivity()))
+        .get(MainViewModel.class);
+
+    final Observer<List<Animal>> resultObserver = new Observer<List<Animal>>() {
+
+      @Override
+      public void onChanged(List<Animal> animals) {
+        url = animals.get(24).getUrl();
+        contentView.loadUrl(url);
+
+      }
+    };
+//    viewModel.getClass().observe(getViewLifecycleOwner(),resultObserver);
   }
 
   private void setupWebView(View root) {
@@ -55,7 +74,8 @@ public class ImageFragment extends Fragment {
     settings.setDisplayZoomControls(false);
     settings.setUseWideViewPort(true);
     settings.setLoadWithOverviewMode(true);
-    new RetrieveImageTask().execute();
+//    contentView.loadUrl(url);
+
   }
 
   /**
@@ -64,7 +84,7 @@ public class ImageFragment extends Fragment {
    * threads and/or handlers. An asynchronous task is * defined by a computation that runs on a
    * background thread and whose result is published on the * UI thread.
    */
-  private class RetrieveImageTask extends AsyncTask<List<Animal>, Void, List<Animal>> {
+/*  private class RetrieveImageTask extends AsyncTask<List<Animal>, Void, List<Animal>> {
 
     AnimalService service;
 
@@ -100,9 +120,9 @@ public class ImageFragment extends Fragment {
     @Override
     protected void onPostExecute(List<Animal> animals) {
       super.onPostExecute(animals);
-      String url = animals.get(7).getUrl();
+      String url = animals.get(24).getUrl();
       contentView.loadUrl(url);
     }
-  }
+  }*/
 }
 

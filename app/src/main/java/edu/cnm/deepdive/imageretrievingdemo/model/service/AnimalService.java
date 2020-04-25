@@ -12,15 +12,15 @@ import retrofit2.http.Url;
 
 public interface AnimalService {
 
-  @GET("getKey")
-  public Call <ApiKey> getApiKey();
+//  @GET("getKey")
+//  public Call <ApiKey> getApiKey();
 
   @FormUrlEncoded
   @POST("getAnimals")
   public Call<List<Animal>> getAnimals(@Field("key") String key);
 
   //If the application passed the url dynamically
-  @GET
-  public Object getObjects(@Url String url);
+//  @GET
+//  public Object getObjects(@Url String url);
 
 }
