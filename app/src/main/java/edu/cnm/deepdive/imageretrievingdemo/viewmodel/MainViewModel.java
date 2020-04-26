@@ -25,10 +25,11 @@ public class MainViewModel extends AndroidViewModel {
 
   AnimalService service;
   private MutableLiveData<List<Animal>> animals;
+  String url;
 
   public MainViewModel(@NonNull Application application) {
     super(application);
-    loadImage();
+    setAnimals(animals);
     animals = new MutableLiveData<>();
   }
 
@@ -36,10 +37,10 @@ public class MainViewModel extends AndroidViewModel {
     return animals;
   }
 
-  //  public void setAnimals(
-  //      LiveData<List<Animal>> animals) {
-  //    new RetrieveImageTask().execute();
-  //  }
+    public void setAnimals(
+        LiveData<List<Animal>> animals) {
+      loadImage();
+    }
 
   //  @SuppressLint("StaticFieldLeak")
   //  public void loadImage() {
@@ -89,7 +90,7 @@ public class MainViewModel extends AndroidViewModel {
       @Override
       protected void onPostExecute(List<Animal> animals) {
         super.onPostExecute(animals);
-        String url = animals.get(24).getUrl();
+        url = animals.get(24).getUrl();
       }
     }.execute();
   }

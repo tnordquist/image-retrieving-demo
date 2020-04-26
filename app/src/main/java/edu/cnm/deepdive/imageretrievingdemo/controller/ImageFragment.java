@@ -31,6 +31,8 @@ public class ImageFragment extends Fragment {
   public View onCreateView(@NonNull LayoutInflater inflater,
       ViewGroup container, Bundle savedInstanceState) {
     View root = inflater.inflate(R.layout.fragment_image, container, false);
+//    viewModel = new ViewModelProvider((getActivity()))
+//        .get(MainViewModel.class);
     setupWebView(root);
     return root;
   }
@@ -39,28 +41,19 @@ public class ImageFragment extends Fragment {
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
     assert getParentFragment() != null;
-    viewModel = new ViewModelProvider(Objects.requireNonNull(getActivity()))
+    viewModel = new ViewModelProvider((Objects.requireNonNull(getActivity())))
         .get(MainViewModel.class);
 
-    final Observer<List<Animal>> resultObserver = new Observer<List<Animal>>() {
-
-      @Override
-      public void onChanged(List<Animal> animals) {
-        url = animals.get(24).getUrl();
-        contentView.loadUrl(url);
-
-      }
-    };
-//    viewModel.getClass().observe(getViewLifecycleOwner(),resultObserver);
+//    final Observer<List<Animal>> resultObserver = animals -> {
+//      url = animals.get(24).getUrl();
+//      contentView.loadUrl(url);
+//    };
+//   viewModel.getClass().observe(getViewLifecycleOwner(),resultObserver);
   }
 
   private void setupWebView(View root) {
     contentView = root.findViewById(R.id.content_view);
     contentView.setWebViewClient(new WebViewClient() {
-      @Override
-      public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-        return false;
-      }
 
       @Override
       public void onPageFinished(WebView view, String url) {
@@ -74,8 +67,7 @@ public class ImageFragment extends Fragment {
     settings.setDisplayZoomControls(false);
     settings.setUseWideViewPort(true);
     settings.setLoadWithOverviewMode(true);
-//    contentView.loadUrl(url);
-
+    contentView.loadUrl(url);
   }
 
   /**
