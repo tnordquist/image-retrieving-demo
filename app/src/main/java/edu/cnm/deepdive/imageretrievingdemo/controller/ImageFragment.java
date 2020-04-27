@@ -15,6 +15,7 @@ import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import edu.cnm.deepdive.imageretrievingdemo.R;
@@ -26,6 +27,8 @@ public class ImageFragment extends Fragment implements OnItemSelectedListener {
   private WebView contentView;
   private MainViewModel viewModel;
 
+  Toolbar toolbar;
+
   private Spinner spinner;
   private SpinnerAdapter spinnerAdapter;
   private AdapterView.OnItemSelectedListener itemSelected;
@@ -34,13 +37,15 @@ public class ImageFragment extends Fragment implements OnItemSelectedListener {
       ViewGroup container, Bundle savedInstanceState) {
     View root = inflater.inflate(R.layout.fragment_image, container, false);
     setupWebView(root);
+    toolbar = root.findViewById(R.id.toolbar);
     spinner = root.findViewById(R.id.animals_spinner);
     spinner.setOnItemSelectedListener(this);
+    toolbar.setTitle(R.string.app_name);
 
     // Create an ArrayAdapter using the string array and a default spinner layout
     ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
         Objects.requireNonNull(getContext()),
-        R.array.animals_array, R.layout.support_simple_spinner_dropdown_item);
+        R.array.animals_array, R.layout.custom_spinner_item);
     // Specify the layout to use when the list of choices appears
     adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     // Apply the adapter to the spinner

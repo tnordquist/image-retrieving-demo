@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">Image Retrieving Demo</string>
+  <string name="app_name">Image Retriever</string>
 
   <string-array name="animals_array">
     <item>Alligator</item>
