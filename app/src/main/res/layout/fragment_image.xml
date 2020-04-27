@@ -12,6 +12,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"/>
+    app:layout_constraintStart_toStartOf="parent">
+    <Spinner
+      android:id="@+id/animals_spinner"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_x="-2dp"
+      android:layout_y="151dp"/>
+  </WebView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
