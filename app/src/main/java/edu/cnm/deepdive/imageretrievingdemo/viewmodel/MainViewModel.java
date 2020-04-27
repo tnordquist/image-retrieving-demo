@@ -23,27 +23,17 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainViewModel extends AndroidViewModel {
 
-  AnimalService service;
   private MutableLiveData<List<Animal>> animals;
-  String url;
 
   public MainViewModel(@NonNull Application application) {
     super(application);
-    setAnimals(animals);
     animals = new MutableLiveData<>();
+    loadAnimals();
   }
 
   public LiveData<List<Animal>> getAnimals() {
     return animals;
   }
-
-    public void setAnimals(
-        LiveData<List<Animal>> animals) {
-      loadImage();
-    }
-
-  //  @SuppressLint("StaticFieldLeak")
-  //  public void loadImage() {
 
   /**
    * AsyncTask enables proper and easy * use of the UI thread. This class allows performing
@@ -51,7 +41,7 @@ public class MainViewModel extends AndroidViewModel {
    * threads and/or handlers. An asynchronous task is * defined by a computation that runs on a
    * background thread and whose result is published on the * UI thread.
    */
-  private void loadImage() {
+  private void loadAnimals() {
     new AsyncTask<List<Animal>, Void, List<Animal>>() {
 
       AnimalService service;
@@ -90,7 +80,7 @@ public class MainViewModel extends AndroidViewModel {
       @Override
       protected void onPostExecute(List<Animal> animals) {
         super.onPostExecute(animals);
-        url = animals.get(24).getUrl();
+        MainViewModel.this.animals.setValue(animals);
       }
     }.execute();
   }
