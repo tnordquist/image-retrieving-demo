@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.imageretrievingdemo.model;
 
+import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -81,6 +82,12 @@ public class Animal {
   public void setUrl(String url) {
     this.url = url;
   }
+
+  @NonNull
+  @Override
+  public String toString() {
+    return name;
+  }
 }
 
 class Taxonomy {
@@ -117,7 +124,11 @@ class Taxonomy {
   public void setFamily(String family) {
     this.family = family;
   }
+
 }
+
+
+
 
 class Speed {
 
