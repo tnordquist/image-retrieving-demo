@@ -19,7 +19,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import edu.cnm.deepdive.imageretrievingdemo.R;
+import edu.cnm.deepdive.imageretrievingdemo.model.Animal;
 import edu.cnm.deepdive.imageretrievingdemo.viewmodel.MainViewModel;
+import java.util.List;
 import java.util.Objects;
 
 public class ImageFragment extends Fragment implements OnItemSelectedListener {
@@ -30,8 +32,7 @@ public class ImageFragment extends Fragment implements OnItemSelectedListener {
   Toolbar toolbar;
 
   private Spinner spinner;
-  private SpinnerAdapter spinnerAdapter;
-  private AdapterView.OnItemSelectedListener itemSelected;
+  private List<Animal> animals;
 
   public View onCreateView(@NonNull LayoutInflater inflater,
       ViewGroup container, Bundle savedInstanceState) {
@@ -42,14 +43,6 @@ public class ImageFragment extends Fragment implements OnItemSelectedListener {
     spinner.setOnItemSelectedListener(this);
     toolbar.setTitle(R.string.app_name);
 
-    // Create an ArrayAdapter using the string array and a default spinner layout
-    ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-        Objects.requireNonNull(getContext()),
-        R.array.animals_array, R.layout.custom_spinner_item);
-    // Specify the layout to use when the list of choices appears
-    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-    // Apply the adapter to the spinner
-    spinner.setAdapter(adapter);
     return root;
   }
 
@@ -59,6 +52,13 @@ public class ImageFragment extends Fragment implements OnItemSelectedListener {
     assert getParentFragment() != null;
     viewModel = new ViewModelProvider((Objects.requireNonNull(getActivity())))
         .get(MainViewModel.class);
+    viewModel.getAnimals().observe(getViewLifecycleOwner(), (animals) -> {
+      this.animals = animals;
+      ArrayAdapter<Animal> adapter = new ArrayAdapter<>(getContext(), R.layout.custom_spinner_item,
+          animals);
+      adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+      spinner.setAdapter(adapter);
+    });
   }
 
   private void setupWebView(View root) {
@@ -80,15 +80,12 @@ public class ImageFragment extends Fragment implements OnItemSelectedListener {
 
   @Override
   public void onItemSelected(AdapterView<?> adapterView, View view, int pos, long id) {
-    viewModel.getAnimals().observe(getViewLifecycleOwner(),
-        (animals -> contentView.loadUrl(animals.get(pos).getUrl())));
-
+    contentView.loadUrl(animals.get(pos).getUrl());
   }
 
   @Override
   public void onNothingSelected(AdapterView<?> adapterView) {
-    viewModel.getAnimals().observe(getViewLifecycleOwner(),
-        (animals -> contentView.loadUrl(animals.get(0).getUrl())));
-  }
+
+   }
 }
 
