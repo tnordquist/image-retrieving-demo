@@ -1,15 +1,4 @@
 <resources>
   <string name="app_name">Image Retriever</string>
 
-  <string-array name="animals_array">
-    <item>Alligator</item>
-    <item>Ant</item>
-    <item>Anteater</item>
-    <item>Antelope</item>
-    <item>Baboon</item>
-    <item>Bat</item>
-    <item>Bear</item>
-    <item>Bison</item>
-  </string-array>
-
 </resources>
