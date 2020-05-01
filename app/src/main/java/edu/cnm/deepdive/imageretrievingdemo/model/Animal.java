@@ -82,6 +82,8 @@ public class Animal {
   public void setUrl(String url) {
     this.url = url;
   }
+<<<<<<< HEAD
+=======
 
   @NonNull
   @Override
@@ -90,5 +92,42 @@ public class Animal {
   }
 }
 
+class Taxonomy {
+
+  @Expose
+  String kingdom;
+
+  @Expose
+  String order;
+
+  @Expose
+  String family;
+>>>>>>> 8262fdf49b81c7321ee5e0fd31d4b7237918aa11
+
+  @NonNull
+  @Override
+  public String toString() {
+    return name;
+  }
+
+}
+
+<<<<<<< HEAD
+=======
+
+
+
+class Speed {
+
+  @Expose
+  private String metric;
+
+  @Expose
+  String imperial;
+
+  public String getMetric() {
+    return metric;
+  }
+>>>>>>> 8262fdf49b81c7321ee5e0fd31d4b7237918aa11
 
 
