@@ -47,7 +47,7 @@ public class MainViewModel extends AndroidViewModel {
                         }
                 );
 
-
+        System.out.println("json: " + animals);
     }
 }
 
