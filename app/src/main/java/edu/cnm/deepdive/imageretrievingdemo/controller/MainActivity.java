@@ -10,9 +10,6 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    new Picasso.Builder(this)
-        .loggingEnabled(true) // Disable for production
-        .build();
     setContentView(R.layout.activity_main);
   }
 
